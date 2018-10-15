@@ -1,0 +1,16 @@
+diff --git a/src/src/CMakeLists.txt b/src/src/CMakeLists.txt
+index d7f387c..0cc2b01 100644
+--- a/src/src/CMakeLists.txt
++++ b/src/src/CMakeLists.txt
+@@ -14,8 +14,10 @@ set(Uri_SRCS
+   ${CMAKE_CURRENT_SOURCE_DIR}/detail/uri_resolve.cpp
+   )
+ 
++find_package(Boost REQUIRED)
+ add_library(network-uri ${Uri_SRCS})
+-target_link_libraries(network-uri)
++target_compile_definitions(network-uri PRIVATE -DNETWORK_URI_EXTERNAL_BOOST)
++target_link_libraries(network-uri Boost::boost)
+ if(${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
+   if (NOT Uri_DISABLE_LIBCXX)
+     target_link_libraries(network-uri "c++")

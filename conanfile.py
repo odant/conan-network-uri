@@ -10,7 +10,7 @@ class NetworkURIConan(ConanFile):
     version = "1.0.2+0"
     license = "Boost Software License - Version 1.0 https://raw.githubusercontent.com/cpp-netlib/uri/master/LICENSE_1_0.txt"
     description = "C++ Network URI"
-    url = "https://github.com/odant/conan-date"
+    url = "https://github.com/odant/conan-network-uri"
     settings = {
         "os": ["Windows", "Linux"],
         "compiler": ["Visual Studio", "gcc"],

@@ -29,6 +29,15 @@ def add_dll_sign(builds):
     return result
 
 
+def add_with_unit_tests(builds):
+    result = []
+    for settings, options, env_vars, build_requires, reference in builds:
+        options = deepcopy(options)
+        options["network-uri:with_unit_tests"] = True
+        result.append([settings, options, env_vars, build_requires, reference])
+    return result
+
+
 if __name__ == "__main__":
     builder = ConanMultiPackager(
         username=username,
@@ -43,6 +52,7 @@ if __name__ == "__main__":
         builds = add_dll_sign(builds)
     if platform.system() == "Linux":
         builds = filter_libcxx(builds)
+    builds = add_with_unit_tests(builds)
     # Replace build configurations
     builder.items = []
     for settings, options, env_vars, build_requires, _ in builds:

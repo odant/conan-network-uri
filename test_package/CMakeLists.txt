@@ -1,5 +1,5 @@
-# Test for HowardHinnant/date Conan package
-# Dmitriy Vetutnev, ODANT, 2018
+# Test for C++ Network URI Conan package
+# Dmitriy Vetutnev, ODANT 2018
 
 
 project(PackageTest CXX)

@@ -1,4 +1,4 @@
-# HowardHinnant/date Conan package
+# C++ Network URI Conan package
 # Dmitriy Vetutnev, ODANT 2018
 
 
@@ -7,7 +7,7 @@ from conans import ConanFile, CMake, tools
 
 class NetworkURIConan(ConanFile):
     name = "network-uri"
-    version = "1.0.2+0"
+    version = "1.0.2+1"
     license = "Boost Software License - Version 1.0 https://raw.githubusercontent.com/cpp-netlib/uri/master/LICENSE_1_0.txt"
     description = "C++ Network URI"
     url = "https://github.com/odant/conan-network-uri"
@@ -22,7 +22,7 @@ class NetworkURIConan(ConanFile):
     }
     default_options = "with_unit_tests=False"
     generators = "cmake"
-    exports_sources = "src/*", "CMakeLists.txt", "external_boost.patch"
+    exports_sources = "src/*", "CMakeLists.txt", "external_boost.patch", "with_unit_tests.patch"
     no_copy_source = True
     build_policy = "missing"
 
@@ -36,6 +36,7 @@ class NetworkURIConan(ConanFile):
 
     def source(self):
         tools.patch(patch_file="external_boost.patch")
+        tools.patch(patch_file="with_unit_tests.patch")
 
     def build(self):
         build_type = "RelWithDebInfo" if self.settings.build_type == "Release" else "Debug"
@@ -47,6 +48,8 @@ class NetworkURIConan(ConanFile):
         cmake.definitions["BUILD_SHARED_LIBS:BOOL"] = "OFF"
         #
         cmake.definitions["Uri_BUILD_TESTS:BOOL"] = "ON" if self.options.with_unit_tests else "OFF"
+        if self.options.with_unit_tests:
+            cmake.definitions["gtest_force_shared_crt:BOOL"] = "ON"
         cmake.definitions["Uri_BUILD_DOCS:BOOL"] = "OFF"
         cmake.definitions["Uri_USE_STATIC_CRT:BOOL"] = "OFF"
         #

@@ -1,0 +1,16 @@
+diff --git a/src/test/CMakeLists.txt b/src/test/CMakeLists.txt
+index 0834f6b7..64ea5782 100644
+--- a/src/test/CMakeLists.txt
++++ b/src/test/CMakeLists.txt
+@@ -29,10 +29,8 @@ foreach (test ${TESTS})
+   if (OPENSSL_FOUND)
+     target_link_libraries(${test} ${OPENSSL_LIBRARIES})
+   endif()
+-  set_target_properties(${test}
+-    PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${Uri_BINARY_DIR}/tests)
+   add_test(${test}
+-    ${Uri_BINARY_DIR}/tests/${test})
++    ${CMAKE_BINARY_DIR}/bin/${test})
+ endforeach (test)
+ 
+ file(GLOB URI_LISTS *.txt)

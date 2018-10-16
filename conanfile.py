@@ -31,8 +31,8 @@ class NetworkURIConan(ConanFile):
         if self.settings.compiler.get_safe("libcxx") == "libstdc++":
             raise Exception("This package is only compatible with libstdc++11")
 
-    def requirements(self):
-        self.requires("boost/[>=1.60.0]@odant/stable")
+    def build_requirements(self):
+        self.build_requires("boost/[>=1.60.0]@odant/stable")
 
     def source(self):
         tools.patch(patch_file="external_boost.patch")
@@ -65,7 +65,6 @@ class NetworkURIConan(ConanFile):
         self.copy("network-uri.pdb", dst="bin", src="lib", keep_path=False)
 
     def package_id(self):
-        self.info.requires["boost"].full_package_mode()
         self.info.options.with_unit_tests = "any"
 
     def package_info(self):

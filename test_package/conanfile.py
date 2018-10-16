@@ -10,7 +10,7 @@ class PackageTestConan(ConanFile):
     generators = "cmake"
 
     def imports(self):
-        self.copy("network-uri.pdb", dst="bin", src="bin")
+        self.copy("*.pdb", dst="bin", src="bin")
 
     def build(self):
         cmake = CMake(self)

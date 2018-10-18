@@ -7,7 +7,7 @@ from conans import ConanFile, CMake, tools
 
 class NetworkURIConan(ConanFile):
     name = "network-uri"
-    version = "1.0.2+1"
+    version = "1.0.2+2"
     license = "Boost Software License - Version 1.0 https://raw.githubusercontent.com/cpp-netlib/uri/master/LICENSE_1_0.txt"
     description = "C++ Network URI"
     url = "https://github.com/odant/conan-network-uri"
@@ -22,7 +22,7 @@ class NetworkURIConan(ConanFile):
     }
     default_options = "with_unit_tests=False"
     generators = "cmake"
-    exports_sources = "src/*", "CMakeLists.txt", "external_boost.patch", "with_unit_tests.patch"
+    exports_sources = "src/*", "!src/src/boost/*", "CMakeLists.txt", "external_boost.patch", "with_unit_tests.patch"
     no_copy_source = True
     build_policy = "missing"
 

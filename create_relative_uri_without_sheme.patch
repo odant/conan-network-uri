@@ -1,0 +1,18 @@
+diff --git a/src/src/detail/uri_parse.cpp b/src/src/detail/uri_parse.cpp
+index 46dd1b0..c414572 100644
+--- a/src/src/detail/uri_parse.cpp
++++ b/src/src/detail/uri_parse.cpp
+@@ -110,11 +110,9 @@ bool parse(string_view::const_iterator &it, string_view::const_iterator last,
+     parts.scheme = uri_part(first, it);
+     // move past the scheme delimiter
+     ++it;
+-    state = uri_state::hier_part;
+-  }
+-  else {
+-    return false;
+   }
++  
++  state = uri_state::hier_part;
+ 
+   // Hierarchical part
+   auto hp_state = hier_part_state::first_slash;

@@ -10,6 +10,7 @@
 #ifdef NETWORK_URI_EXTERNAL_BOOST
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/join.hpp>
+namespace network_boost = boost;
 #else   // NETWORK_URI_EXTERNAL_BOOST
 #include "../boost/algorithm/string/split.hpp"
 #include "../boost/algorithm/string/join.hpp"
@@ -30,15 +31,14 @@ std::string normalize_path_segments(string_view path) {
       return ch == '/';
     });
 
-    // remove single dot segments
-    detail::remove_erase_if(
-        path_segments, [](const std::string& s) { return (s == "."); });
-
-    // remove double dot segments
+    bool last_segment_is_slash = path_segments.back().empty();
     std::vector<std::string> normalized_segments;
-    for (auto& segment : path_segments) {
-      if (segment == "..") {
-        if (normalized_segments.size() <= 1) {
+    for (const auto &segment : path_segments) {
+      if (segment.empty() || (segment == ".")) {
+        continue;
+      }
+      else if (segment == "..") {
+        if (normalized_segments.empty()) {
           throw uri_builder_error();
         }
         normalized_segments.pop_back();
@@ -48,19 +48,13 @@ std::string normalize_path_segments(string_view path) {
       }
     }
 
-    // remove adjacent slashes
-    optional<std::string> prev_segment;
-    detail::remove_erase_if(
-        normalized_segments, [&prev_segment](const std::string& segment) {
-          bool has_adjacent_slash =
-              ((prev_segment && prev_segment->empty()) && segment.empty());
-          if (!has_adjacent_slash) {
-            prev_segment = segment;
-          }
-          return has_adjacent_slash;
-        });
+    for (const auto &segment : normalized_segments) {
+      result += "/" + segment;
+    }
 
-    result = network_boost::join(normalized_segments, "/");
+    if (last_segment_is_slash) {
+      result += "/";
+    }
   }
 
   if (result.empty()) {

@@ -7,7 +7,7 @@ from conans import ConanFile, CMake, tools
 
 class NetworkURIConan(ConanFile):
     name = "network-uri"
-    version = "1.0.2+5"
+    version = "1.1.0+0"
     license = "Boost Software License - Version 1.0 https://raw.githubusercontent.com/cpp-netlib/uri/master/LICENSE_1_0.txt"
     description = "C++ Network URI"
     url = "https://github.com/odant/conan-network-uri"
@@ -22,7 +22,7 @@ class NetworkURIConan(ConanFile):
     }
     default_options = "with_unit_tests=False"
     generators = "cmake"
-    exports_sources = "src/*", "!src/src/boost/*", "CMakeLists.txt", "external_boost.patch", "with_unit_tests.patch", "create_relative_uri_without_sheme.patch", "disable_throw_decode_nonASCII.patch"
+    exports_sources = "src/*", "!src/src/boost/*", "CMakeLists.txt", "external_boost.patch", "with_unit_tests.patch", "create_relative_uri_without_sheme.patch"
     no_copy_source = True
     build_policy = "missing"
 
@@ -38,7 +38,6 @@ class NetworkURIConan(ConanFile):
         tools.patch(patch_file="external_boost.patch")
         tools.patch(patch_file="with_unit_tests.patch")
         tools.patch(patch_file="create_relative_uri_without_sheme.patch")
-        tools.patch(patch_file="disable_throw_decode_nonASCII.patch")
 
     def build(self):
         build_type = "RelWithDebInfo" if self.settings.build_type == "Release" else "Debug"

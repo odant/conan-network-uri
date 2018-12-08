@@ -7,7 +7,7 @@ from conans import ConanFile, CMake, tools
 
 class NetworkURIConan(ConanFile):
     name = "network-uri"
-    version = "1.0.2+4"
+    version = "1.0.2+5"
     license = "Boost Software License - Version 1.0 https://raw.githubusercontent.com/cpp-netlib/uri/master/LICENSE_1_0.txt"
     description = "C++ Network URI"
     url = "https://github.com/odant/conan-network-uri"
@@ -59,9 +59,9 @@ class NetworkURIConan(ConanFile):
         cmake.build()
         if self.options.with_unit_tests:
             if self.settings.os == "Windows":
-                self.run("ctest --build-config %s" % self.settings.build_type)
+                self.run("ctest --output-on-failure --build-config %s" % self.settings.build_type)
             else:
-                self.run("ctest")
+                self.run("ctest --output-on-failure")
 
     def package(self):
         self.copy("*.hpp", dst="include", src="src/include", keep_path=True)
